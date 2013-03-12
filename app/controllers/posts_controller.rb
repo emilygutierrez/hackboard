@@ -1,7 +1,12 @@
 class PostsController < ApplicationController
 
 	def index
-		@posts = Post.includes(:comments).all
+		@posts = Post.includes(:comments)
+		if params[:user_id]
+			@posts = Post.where(user_id: params[:user_id])
+		else
+			@posts = Post
+		end		
 	end	
 
 	def new
@@ -10,7 +15,8 @@ class PostsController < ApplicationController
 
 	def create
 		@posts = Post.new(params[:post])
-		if @posts.save
+		if @posts.valid?
+			@posts.save
 			redirect_to posts_path
 		else
 			render :new
