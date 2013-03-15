@@ -1,8 +1,15 @@
 Hackboard::Application.routes.draw do
 
   resources :posts do
+    collection do
+      get :mine, as: :my
+    end  
     resources :comments
   end    
+  resources :users do
+    resources :posts
+  end
+    
   root to: 'posts#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.

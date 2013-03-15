@@ -1,12 +1,22 @@
 class PostsController < ApplicationController
 
 	def index
-		@posts = Post.includes(:comments)
 		if params[:user_id]
 			@posts = Post.where(user_id: params[:user_id])
 		else
-			@posts = Post
+			@posts = Post.all? 
 		end		
+		@posts = Post.includes(:comments)
+	end	
+
+	def mine
+		@posts = current_user.posts
+		render 'index.html.erb'
+	end	
+
+	def user_session
+		session[:user_id] = User.find(params[:user_id])
+		User.find(session[:user_id])
 	end	
 
 	def new
