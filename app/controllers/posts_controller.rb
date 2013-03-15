@@ -1,17 +1,19 @@
 class PostsController < ApplicationController
 
+	before_filter :authenticate_user!
+
 	def index
 		if params[:user_id]
 			@posts = Post.where(user_id: params[:user_id])
 		else
-			@posts = Post.all? 
+			@posts = Post.all
 		end		
 		@posts = Post.includes(:comments)
 	end	
 
 	def mine
 		@posts = current_user.posts
-		render 'index.html.erb'
+		render :index
 	end	
 
 	def user_session
@@ -24,7 +26,11 @@ class PostsController < ApplicationController
 	end	
 
 	def create
-		@posts = Post.new(params[:post])
+		@post = Post.new
+	end
+
+	def create
+		@posts = current_user.posts.build(params[:post])
 		if @posts.valid?
 			@posts.save
 			redirect_to posts_path
