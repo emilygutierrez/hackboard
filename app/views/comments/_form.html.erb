@@ -1,4 +1,6 @@
 <%= form_for [comment.post, comment] do |f| %>
+	<%= f.file_field :image %>
 	<%= f.text_field :body, placeholder: 'Add a comment...' %>
 	<%= f.submit %>
+
 <% end %>

@@ -3,6 +3,7 @@
 <ul>
 <% @posts.each do |p| %>
 	<li>
+	<%= image_tag p.image.url(:medium) %>	
 	<%= p.description %>
 	<%= p.user.email %>
 	<%= link_to "Go!", p.link %>
