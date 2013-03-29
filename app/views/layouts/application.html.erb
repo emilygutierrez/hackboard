@@ -5,16 +5,38 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 
+	<div class="navbar navbar-inverse">
+	  <div class="navbar-inner">
+	    <a class="brand" href="#">Catboard</a>
+	    <ul class="nav">
+	      <li class="active">
+	      	<%= link_to "Posts", posts_path %>
+	      </li>
+	    </ul>
+	  </div>
+	</div>	
+
+<style>
+	.border { border: solid 1px red; box-sizing: border-box;}
+</style>		
+
+<div class="container">
+	
+	<%= yield %>	
+
 <% if user_signed_in? %>
-	<%= link_to "Sign Out", destroy_user_session_path, method: :delete %>	
+	<%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+	<%= link_to "Add Post", new_post_path %>	
 <% else %>
 	<%= link_to "Sign In", new_user_session_path %>
 <% end %>
 
-<%= yield %>
+</div>	
 
 </body>
 </html>
